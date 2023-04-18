@@ -13,7 +13,6 @@ class CharactersRepository implements ICharactersRepository {
   @override
   AsyncResult<List<Character>, Exception> getAll() async {
     try {
-      // _params['offset'] = 200;
       final response = await API().get(path: _path, params: _params);
       List<Character> charsList = [];
       final data = json.decode(response.body);
