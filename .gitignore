@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/flutter,visualstudiocode,android,swift,xcode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=flutter,visualstudiocode,android,swift,xcode,macos
 
+### MAC OSX Files ###
+*.DS_Store
+
 ### Android ###
 # Gradle files
 .gradle/
@@ -50,6 +53,7 @@ gen-external-apklibs
 .flutter-plugins-dependencies
 .fvm/flutter_sdk
 .packages
+*.lock
 .pub-cache/
 .pub/
 coverage/
