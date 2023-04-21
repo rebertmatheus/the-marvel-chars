@@ -1,8 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:the_marvel_chars/src/data/datasources/interface/datasources.dart';
 import 'package:http/http.dart' as http;
 
-class API {
+class API implements IDataSources {
   static final API _instance = API._internal();
   factory API() => _instance;
   API._internal();
@@ -20,6 +21,7 @@ class API {
     });
   }
 
+  @override
   Future<http.Response> get({required String path, required Map<String, dynamic> params}) async {
     _addKeys(params);
     var uri = Uri.https(URL, path, params.map((key, value) => MapEntry(key, value.toString())));
