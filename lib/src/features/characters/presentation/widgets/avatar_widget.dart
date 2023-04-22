@@ -10,7 +10,7 @@ class AvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: Colors.grey[350],
+      backgroundColor: Colors.grey,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: CachedNetworkImage(

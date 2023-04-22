@@ -7,7 +7,7 @@ class CharactersViewModel implements ICharactersViewModel {
   late final ICharactersRepository _repository;
   final Map<String, dynamic> _params = {'limit': 100, 'offset': 0};
   int _offsetMultiplier = 0;
-  List<Character> _charactersList = [];
+  final List<Character> _charactersList = [];
 
   @override
   List<Character> get charactersList => _charactersList;
@@ -28,7 +28,7 @@ class CharactersViewModel implements ICharactersViewModel {
       final result = await _repository.getAll(params: _params);
       result.fold(
         (success) {
-          _charactersList = success;
+          _charactersList.addAll(success);
         },
         (failure) {
           return Failure(failure.toString());
