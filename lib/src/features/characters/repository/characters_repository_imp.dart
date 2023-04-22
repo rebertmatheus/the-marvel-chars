@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:result_dart/result_dart.dart';
 import 'package:the_marvel_chars/src/data/datasources/interface/datasources.dart';
 import 'package:the_marvel_chars/src/features/characters/model/character.dart';
 import 'package:the_marvel_chars/src/features/characters/model/thumbnail.dart';
 import 'package:the_marvel_chars/src/features/characters/repository/characters_repository.dart';
+import 'package:the_marvel_chars/src/utils/exceptions/characters_exception.dart';
 
 class CharactersRepository implements ICharactersRepository {
   final String _path = '/v1/public/characters';
@@ -15,11 +15,14 @@ class CharactersRepository implements ICharactersRepository {
   }
 
   @override
-  AsyncResult<List<Character>, Exception> getAll({required Map<String, dynamic> params}) async {
+  AsyncResult<List<Character>, CharactersException> getAll({required Map<String, dynamic> params}) async {
     try {
       final response = await _api.get(path: _path, params: params);
       List<Character> charsList = [];
       final data = json.decode(response.body);
+      if (data['code'] != 200) {
+        return Failure(CharactersException('Data not found!!!'));
+      }
       for (var json in data['data']['results']) {
         var char = Character(
             id: json['id'],
@@ -31,9 +34,8 @@ class CharactersRepository implements ICharactersRepository {
       }
 
       return Success(charsList);
-    } on HttpException catch (e) {
-      print(e);
-      return Failure(Exception(e.message));
+    } on Exception catch (e) {
+      return Failure(CharactersException(e.toString()));
     }
   }
 }
