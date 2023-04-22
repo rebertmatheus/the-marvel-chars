@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:the_marvel_chars/src/features/characters/presentation/controllers/characters_view_controller.dart';
-import 'package:the_marvel_chars/src/features/characters/presentation/widgets/avatar_widget.dart';
+import 'package:the_marvel_chars/src/features/characters/presentation/widgets/bottom_list_widget.dart';
+import 'package:the_marvel_chars/src/features/characters/presentation/widgets/carousel_widget.dart';
 import 'package:the_marvel_chars/src/utils/enums/status_enum.dart';
 
 class CharactersView extends StatelessWidget {
@@ -13,7 +15,9 @@ class CharactersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
+      appBar: AppBar(
+        title: const Text('The Marvel\'s Characters'),
+      ),
       body: ValueListenableBuilder<Status>(
         valueListenable: _viewController.status,
         builder: (context, status, _) {
@@ -23,17 +27,17 @@ class CharactersView extends StatelessWidget {
             );
           }
 
-          return ListView.separated(
-            itemBuilder: (context, int index) => ListTile(
-              leading: AvatarWidget(
-                imageURL: _viewController.characters[index].thumbnail?.url ?? '',
+          return Column(
+            children: [
+              CarouselWidget(charactersList: _viewController.topCharacters),
+              SizedBox(
+                height: ((ScreenUtil().screenHeight - ScreenUtil().statusBarHeight) * 0.5),
+                child: BottomListWidget(
+                  charactersList: _viewController.bottomCharacters,
+                  controller: _viewController.scrollController,
+                ),
               ),
-              title: Container(
-                color: Colors.blue,
-              ),
-            ),
-            separatorBuilder: (_, __) => const Divider(),
-            itemCount: _viewController.characters.length,
+            ],
           );
         },
       ),

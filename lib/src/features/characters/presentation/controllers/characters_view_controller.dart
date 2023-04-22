@@ -4,7 +4,10 @@ import 'package:the_marvel_chars/src/utils/enums/status_enum.dart';
 
 abstract class ICharactersViewController {
   ValueNotifier<Status> get status;
-  List<Character> get characters;
+  List<Character> get allCharacters;
+  List<Character> get bottomCharacters;
+  List<Character> get topCharacters;
+  ScrollController get scrollController;
 
   void fetchCharacters();
   void updateCharacters();

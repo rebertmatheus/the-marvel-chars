@@ -7,9 +7,16 @@ import 'package:the_marvel_chars/src/utils/enums/status_enum.dart';
 class CharactersViewController extends ChangeNotifier implements ICharactersViewController {
   final ValueNotifier<Status> _status = ValueNotifier(Status.loading);
   late final ICharactersViewModel _viewModel;
+  final ScrollController _scrollController = ScrollController();
 
   CharactersViewController({required ICharactersViewModel viewModel}) {
+    _status.value = Status.loading;
     _viewModel = viewModel;
+    _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent == _scrollController.offset) {
+        updateCharacters();
+      }
+    });
     fetchCharacters();
   }
 
@@ -17,15 +24,24 @@ class CharactersViewController extends ChangeNotifier implements ICharactersView
   ValueNotifier<Status> get status => _status;
 
   @override
-  List<Character> get characters => _viewModel.charactersList;
+  List<Character> get allCharacters => _viewModel.charactersList;
+
+  @override
+  List<Character> get bottomCharacters => _viewModel.charactersList.sublist(5, _viewModel.charactersList.length);
+
+  @override
+  List<Character> get topCharacters => _viewModel.charactersList.sublist(0, 5);
+
+  @override
+  ScrollController get scrollController => _scrollController;
 
   @override
   Future fetchCharacters() async {
-    _status.value = Status.loading;
     final result = await _viewModel.fetchCharacters();
     result.fold(
       (success) {
         _status.value = Status.success;
+
         notifyListeners();
       },
       (failure) {
@@ -37,7 +53,7 @@ class CharactersViewController extends ChangeNotifier implements ICharactersView
 
   @override
   void updateCharacters() {
-    _status.value = Status.loading;
+    _status.value = Status.updating;
     _viewModel.increaseOffsetMultiplier();
     fetchCharacters();
   }
