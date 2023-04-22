@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:result_dart/result_dart.dart';
 import 'package:the_marvel_chars/src/features/characters/model/character.dart';
 import 'package:the_marvel_chars/src/features/characters/presentation/controllers/characters_view_controller.dart';
 import 'package:the_marvel_chars/src/features/characters/view_model/characters_view_model.dart';
@@ -8,6 +9,7 @@ class CharactersViewController extends ChangeNotifier implements ICharactersView
   final ValueNotifier<Status> _status = ValueNotifier(Status.loading);
   late final ICharactersViewModel _viewModel;
   final ScrollController _scrollController = ScrollController();
+  String _errorMessage = '';
 
   CharactersViewController({required ICharactersViewModel viewModel}) {
     _status.value = Status.loading;
@@ -36,16 +38,19 @@ class CharactersViewController extends ChangeNotifier implements ICharactersView
   ScrollController get scrollController => _scrollController;
 
   @override
+  String get errorMessage => _errorMessage;
+
+  @override
   Future fetchCharacters() async {
     final result = await _viewModel.fetchCharacters();
     result.fold(
       (success) {
         _status.value = Status.success;
-
         notifyListeners();
       },
       (failure) {
         _status.value = Status.failure;
+        _errorMessage = failure.toString();
         notifyListeners();
       },
     );

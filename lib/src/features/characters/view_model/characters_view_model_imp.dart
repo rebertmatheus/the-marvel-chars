@@ -2,6 +2,7 @@ import 'package:result_dart/result_dart.dart';
 import 'package:the_marvel_chars/src/features/characters/model/character.dart';
 import 'package:the_marvel_chars/src/features/characters/repository/characters_repository.dart';
 import 'package:the_marvel_chars/src/features/characters/view_model/characters_view_model.dart';
+import 'package:the_marvel_chars/src/utils/exceptions/characters_exception.dart';
 
 class CharactersViewModel implements ICharactersViewModel {
   late final ICharactersRepository _repository;
@@ -22,21 +23,21 @@ class CharactersViewModel implements ICharactersViewModel {
   }
 
   @override
-  AsyncResult<bool, Exception> fetchCharacters() async {
+  AsyncResult<bool, CharactersException> fetchCharacters() async {
     try {
       _params['offset'] = _params['limit'] * _offsetMultiplier;
-      final result = await _repository.getAll(params: _params);
-      result.fold(
+      final response = await _repository.getAll(params: _params);
+      return response.fold(
         (success) {
           _charactersList.addAll(success);
+          return const Success(true);
         },
         (failure) {
-          return Failure(failure.toString());
+          return Failure(failure);
         },
       );
-      return const Success(true);
     } on Exception catch (ex) {
-      return Failure(ex);
+      return Failure(CharactersException(ex.toString()));
     }
   }
 }
