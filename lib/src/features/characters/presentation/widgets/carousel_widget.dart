@@ -36,24 +36,42 @@ class CarouselWidget extends StatelessWidget {
                 ),
               ],
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(24.sp)),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: item.thumbnail?.url ?? '',
-                progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                  child: CircularProgressIndicator(
-                    value: downloadProgress.progress,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(24.sp)),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: item.thumbnail?.url ?? '',
+                    progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                      child: CircularProgressIndicator(
+                        value: downloadProgress.progress,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const Center(child: Icon(Icons.error_outline)),
                   ),
                 ),
-                errorWidget: (context, url, error) => const Center(child: Icon(Icons.error_outline)),
-              ),
+                Container(
+                  margin: EdgeInsets.only(left: 16.sp, bottom: 16.sp),
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    item.name.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      backgroundColor: Colors.black.withAlpha(168),
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
       ).toList(),
       options: CarouselOptions(
-        height: (ScreenUtil().screenHeight - ScreenUtil().statusBarHeight) * 0.4,
+        height: (ScreenUtil().screenHeight - ScreenUtil().statusBarHeight) * 0.38,
         aspectRatio: 16 / 9,
         viewportFraction: 0.6,
         enlargeCenterPage: true,
