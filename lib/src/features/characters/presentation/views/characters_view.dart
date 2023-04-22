@@ -35,6 +35,7 @@ class CharactersView extends StatelessWidget {
                 child: BottomListWidget(
                   charactersList: _viewController.bottomCharacters,
                   controller: _viewController.scrollController,
+                  isLoadingNewItems: _viewController.status.value == Status.updating,
                 ),
               ),
             ],
