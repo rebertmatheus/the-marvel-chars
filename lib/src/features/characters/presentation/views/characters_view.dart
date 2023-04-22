@@ -27,6 +27,29 @@ class CharactersView extends StatelessWidget {
             );
           }
 
+          if (status == Status.failure) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    size: 64,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      _viewController.errorMessage.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
           return Column(
             children: [
               CarouselWidget(charactersList: _viewController.topCharacters),
@@ -35,6 +58,7 @@ class CharactersView extends StatelessWidget {
                 child: BottomListWidget(
                   charactersList: _viewController.bottomCharacters,
                   controller: _viewController.scrollController,
+                  isLoadingNewItems: _viewController.status.value == Status.updating,
                 ),
               ),
             ],

@@ -6,10 +6,12 @@ import 'package:the_marvel_chars/src/features/characters/presentation/widgets/av
 class BottomListWidget extends StatelessWidget {
   late final List<Character> _charactersList;
   late final ScrollController _controller;
+  bool _isLoadingNewItems = false;
 
-  BottomListWidget({super.key, required List<Character> charactersList, required ScrollController controller}) {
+  BottomListWidget({super.key, required List<Character> charactersList, required ScrollController controller, bool isLoadingNewItems = false}) {
     _charactersList = charactersList;
     _controller = controller;
+    _isLoadingNewItems = isLoadingNewItems;
   }
 
   @override
@@ -27,12 +29,14 @@ class BottomListWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis),
           );
         } else {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.sp),
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return _isLoadingNewItems
+              ? Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.sp),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : null;
         }
       },
       separatorBuilder: (_, __) => const Divider(),
