@@ -71,7 +71,7 @@ class CarouselWidget extends StatelessWidget {
         },
       ).toList(),
       options: CarouselOptions(
-        height: (ScreenUtil().screenHeight - ScreenUtil().statusBarHeight) * 0.4,
+        height: (ScreenUtil().screenHeight - ScreenUtil().statusBarHeight) * 0.38,
         aspectRatio: 16 / 9,
         viewportFraction: 0.6,
         enlargeCenterPage: true,

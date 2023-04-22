@@ -7,5 +7,5 @@ ThemeData theme(ColorScheme colors, {String fontFamily = ''}) {
     fontFamily = Platform.isIOS ? 'Helvetica' : 'Roboto';
   }
 
-  return ThemeData(colorScheme: colors);
+  return ThemeData(colorScheme: colors, fontFamily: fontFamily);
 }
