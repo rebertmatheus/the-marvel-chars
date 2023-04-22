@@ -8,6 +8,7 @@ abstract class ICharactersViewController {
   List<Character> get bottomCharacters;
   List<Character> get topCharacters;
   ScrollController get scrollController;
+  String get errorMessage;
 
   void fetchCharacters();
   void updateCharacters();
