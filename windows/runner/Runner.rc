@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "the_marvel_chars" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "the_marvel_chars" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.trebert. All rights reserved." "\0"
             VALUE "OriginalFilename", "the_marvel_chars.exe" "\0"
             VALUE "ProductName", "the_marvel_chars" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

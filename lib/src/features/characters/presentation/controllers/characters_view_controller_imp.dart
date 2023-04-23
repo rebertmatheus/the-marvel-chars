@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:result_dart/result_dart.dart';
 import 'package:the_marvel_chars/src/features/characters/model/character.dart';
 import 'package:the_marvel_chars/src/features/characters/presentation/controllers/characters_view_controller.dart';
 import 'package:the_marvel_chars/src/features/characters/view_model/characters_view_model.dart';

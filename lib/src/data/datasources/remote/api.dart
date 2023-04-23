@@ -25,7 +25,6 @@ class API implements IDataSources {
   Future<http.Response> get({required String path, required Map<String, dynamic> params}) async {
     _addKeys(params);
     var uri = Uri.https(URL, path, params.map((key, value) => MapEntry(key, value.toString())));
-    var result = await http.get(uri);
-    return result;
+    return await http.get(uri);
   }
 }
