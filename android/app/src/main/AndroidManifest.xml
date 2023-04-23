@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.the_marvel_chars">
+    package="com.trebert.the_marvel_chars">
    <application
         android:label="the_marvel_chars"
         android:name="${applicationName}"
